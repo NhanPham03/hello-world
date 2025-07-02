@@ -7,7 +7,6 @@ const post = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
     image: z.object({
       url: z.string(),
       alt: z.string(),
