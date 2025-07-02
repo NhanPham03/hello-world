@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+
+const page = {
+  title: "500",
+  description: "Internal server error",
+};
+---
+<BaseLayout title={page.title} description={page.description}>
+  <h1>Something went wrong...</h1>
+  <div>
+    {error instanceof Error ? error.message : "Unknown error occurred"}
+  </div>
+</BaseLayout>
