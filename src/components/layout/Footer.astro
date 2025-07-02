@@ -1,0 +1,42 @@
+---
+export interface Props {
+  backToTop?: boolean;
+}
+
+const { backToTop = false } = Astro.props;
+---
+
+<footer>
+  <p>Made with Astro</p>
+</footer>
+
+<style>
+  footer {
+    background-color: black;
+    color: white;
+    padding: 6em;
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const backToTop = document.querySelector(".backToTop");
+
+    const toggleButton = () => {
+      if (window.scrollY > 250) {
+        backToTop?.classList.add("active");
+      } else {
+        backToTop?.classList.remove("active");
+      }
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+
+    window.addEventListener("scroll", toggleButton);
+  });
+</script>

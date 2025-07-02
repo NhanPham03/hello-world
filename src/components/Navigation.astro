@@ -1,0 +1,12 @@
+---
+const links = [
+  { title: "Home", href: "/" },
+  { title: "About", href: "/about" },
+  { title: "Posts", href: "/posts" },
+  { title: "Tags", href: "/tags" },
+];
+---
+
+<div class="nav-links">
+  {links.map((link) => <a href={link.href}>{link.title}</a>)}
+</div>
