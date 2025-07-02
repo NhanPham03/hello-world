@@ -1,0 +1,21 @@
+---
+
+---
+
+<div class="card">
+  <slot />
+</div>
+
+<style>
+  div.card {
+    background-color: lightblue;
+    border-radius: 0.5rem;
+    border: 3px solid black;
+    filter: drop-shadow(7px 7px 0 rgb(0 0 0 / 1));
+    transition: all 0.3s ease-in-out;
+    padding: 1rem;
+  }
+  div.card:hover {
+    filter: drop-shadow(5px 5px 0 rgb(0 0 0 / 1));
+  }
+</style>
