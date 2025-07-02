@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 interface Props {
   error: unknown;
@@ -12,6 +12,7 @@ const page = {
   description: "Internal server error",
 };
 ---
+
 <BaseLayout title={page.title} description={page.description}>
   <h1>Something went wrong...</h1>
   <div>

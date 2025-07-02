@@ -12,7 +12,7 @@ export const PostViewer: FunctionalComponent = () => {
   const [currentId, setCurrentId] = useState<PostId>(null);
 
   // History for back/forward navigation
-  const [history, setHistory] = useState<PostId[]>([null]);  // null = home
+  const [history, setHistory] = useState<PostId[]>([null]); // null = home
   const [current, setCurrent] = useState<number>(0);
 
   // Loading state
@@ -21,21 +21,21 @@ export const PostViewer: FunctionalComponent = () => {
   useEffect(() => {
     setLoading(true);
     fetch("/api/posts.json")
-      .then(r => {
+      .then((r) => {
         if (!r.ok) return null;
         return r.json();
       })
-      .then(data => {
+      .then((data) => {
         setPosts(data);
         setLoading(false);
       });
   }, []);
 
   // Find the post from the posts state
-  const post = currentId ? posts.find(p => p.id === currentId) : null;
+  const post = currentId ? posts.find((p) => p.id === currentId) : null;
 
   const goTo = (id: PostId) => {
-    if (history[current] === id) return;  // Don't add duplicate if already current post
+    if (history[current] === id) return; // Don't add duplicate if already current post
     const newHistory = [...history.slice(0, current + 1), id];
     setHistory(newHistory);
     setCurrent(newHistory.length - 1);
@@ -62,11 +62,7 @@ export const PostViewer: FunctionalComponent = () => {
         <h3>Posts</h3>
         {/* Controls */}
         <div className="pv-controls">
-          <button
-            aria-label="Back"
-            onClick={() => goBack()}
-            disabled={current <= 0}
-          >
+          <button aria-label="Back" onClick={() => goBack()} disabled={current <= 0}>
             <span className="ic--baseline-arrow-back"></span>
           </button>
           <button
@@ -76,17 +72,13 @@ export const PostViewer: FunctionalComponent = () => {
           >
             <span className="ic--baseline-arrow-forward"></span>
           </button>
-          <button
-            aria-label="Home"
-            onClick={() => goTo(null)}
-            disabled={!post}
-          >
+          <button aria-label="Home" onClick={() => goTo(null)} disabled={!post}>
             <span className="ic--baseline-home"></span>
           </button>
         </div>
         {/* Posts navigation */}
         <ul className="pv-list">
-          {posts.map(post => (
+          {posts.map((post) => (
             <li key={post.id}>
               <button
                 onClick={() => goTo(post.id)}
@@ -110,11 +102,13 @@ export const PostViewer: FunctionalComponent = () => {
         ) : (
           <article className="pv-content">
             <h1>{post.data.title}</h1>
-            <p><em>{post.data.description}</em></p>
+            <p>
+              <em>{post.data.description}</em>
+            </p>
             <p>Published on {post.data.pubDate}</p>
             <div className="tags">
               <p>Tags: </p>
-              {post.data.tags.map(tag => (
+              {post.data.tags.map((tag) => (
                 <p className="tag">{tag}</p>
               ))}
             </div>

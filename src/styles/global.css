@@ -42,7 +42,12 @@ body {
   scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Noto Sans JP", Arial, Helvetica, sans-serif;
 }
 h1 {
@@ -50,11 +55,15 @@ h1 {
   font-size: 2.5rem;
 }
 
-p, li, span {
+p,
+li,
+span {
   font-family: "M PLUS 1p", Arial, Helvetica, sans-serif;
 }
 
-code, pre, a {
+code,
+pre,
+a {
   font-family: "IBM Plex Mono", "Courier New", Courier, monospace;
 }
 
@@ -97,7 +106,7 @@ code, pre, a {
     display: block;
     position: static;
     width: auto;
-    background: none;;
+    background: none;
   }
   .nav-links a {
     display: inline-block;

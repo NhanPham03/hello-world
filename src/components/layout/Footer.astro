@@ -5,6 +5,7 @@ export interface Props {
 
 const { backToTop = false } = Astro.props;
 ---
+
 <footer>
   <p>Made with Astro</p>
 </footer>
@@ -18,24 +19,24 @@ const { backToTop = false } = Astro.props;
 </style>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const backToTop = document.querySelector('.backToTop');
+  document.addEventListener("astro:page-load", () => {
+    const backToTop = document.querySelector(".backToTop");
 
     const toggleButton = () => {
       if (window.scrollY > 250) {
-        backToTop?.classList.add('active');
+        backToTop?.classList.add("active");
       } else {
-        backToTop?.classList.remove('active');
+        backToTop?.classList.remove("active");
       }
     };
 
-    backToTop?.addEventListener('click', () => {
+    backToTop?.addEventListener("click", () => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     });
 
-    window.addEventListener('scroll', toggleButton);
+    window.addEventListener("scroll", toggleButton);
   });
 </script>

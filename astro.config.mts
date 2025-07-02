@@ -9,5 +9,5 @@ export default defineConfig({
   integrations: [mdx(), preact()],
   experimental: {
     contentIntellisense: true,
-  }
+  },
 });

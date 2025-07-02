@@ -5,7 +5,6 @@
 - **Code**: Licensed under the [GPL-3.0 License](./LICENSE)
 - **Content (posts, articles, etc.)**: Licensed under the [Creative Commons BY-NC-SA 4.0 International License](./LICENSE-CONTENT.txt)
 
-
 ## Project Structure
 
 Inside of this Astro project, you'll see the following folders and files:

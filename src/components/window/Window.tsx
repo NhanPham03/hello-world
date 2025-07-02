@@ -65,13 +65,13 @@ export const Window: FunctionalComponent<WindowProps> = ({
 
   // Move/resize (optimized with requestAnimationFrame)
   const rafRef = useRef<number | null>(null);
-  const lastResizeStart = useRef<{ 
+  const lastResizeStart = useRef<{
     clientX: number;
     clientY: number;
     width: number;
     height: number;
     x: number;
-    y: number 
+    y: number;
   } | null>(null);
 
   // Handle dragging/resizing logic
@@ -116,7 +116,7 @@ export const Window: FunctionalComponent<WindowProps> = ({
         }
         pendingPos.current = newPos;
         pendingSize.current = newSize;
-        
+
         // Prevent unnecessary renders
         if (rafRef.current === null) {
           rafRef.current = requestAnimationFrame(() => {
@@ -126,7 +126,7 @@ export const Window: FunctionalComponent<WindowProps> = ({
           });
         }
       }
-    }
+    };
 
     const onUp = () => {
       setDragging(false);
@@ -158,17 +158,17 @@ export const Window: FunctionalComponent<WindowProps> = ({
   }, [dragging, resizing]);
 
   const onHeaderDown = (e: MouseEvent | TouchEvent) => {
-    if (maximized) return;  // Prevent dragging when maximized
+    if (maximized) return; // Prevent dragging when maximized
     const { clientX, clientY } = getClientXY(e);
     setOffset({
       x: clientX - pos.x,
       y: clientY - pos.y,
     });
-    setDragging(true);  // Enable flag, run drag logic (useEffect)
+    setDragging(true); // Enable flag, run drag logic (useEffect)
   };
 
   const onResizeDown = (dir: string, e: MouseEvent | TouchEvent) => {
-    if (maximized || minimized) return;  // Prevent resizing when maximized or minimized
+    if (maximized || minimized) return; // Prevent resizing when maximized or minimized
     const { clientX, clientY } = getClientXY(e);
     lastResizeStart.current = {
       clientX,
@@ -208,8 +208,8 @@ export const Window: FunctionalComponent<WindowProps> = ({
       {/* Header */}
       <div
         className="wd-header"
-        onMouseDown={e => onHeaderDown(e)}
-        onTouchStart={e => onHeaderDown(e)}
+        onMouseDown={(e) => onHeaderDown(e)}
+        onTouchStart={(e) => onHeaderDown(e)}
         onDblClick={() => onToggleMaximize()}
       >
         {/* Title */}
@@ -218,45 +218,29 @@ export const Window: FunctionalComponent<WindowProps> = ({
         </div>
         {/* Controls */}
         <div className="wd-controls">
-          <button
-            aria-label="Minimize"
-            onClick={() => onToggleMinimize()}
-            tabIndex={-1}
-          >
+          <button aria-label="Minimize" onClick={() => onToggleMinimize()} tabIndex={-1}>
             <span className={`ic--baseline-${minimized ? "arrow-down" : "arrow-up"}`}></span>
           </button>
-          <button
-            aria-label="Maximize"
-            onClick={() => onToggleMaximize()}
-            tabIndex={-1}
-          >
+          <button aria-label="Maximize" onClick={() => onToggleMaximize()} tabIndex={-1}>
             <span className={`ic--baseline-${maximized ? "zoom-in" : "zoom-out"}`}></span>
           </button>
-          <button
-            aria-label="Close"
-            onClick={() => onClose()}
-            tabIndex={-1}
-          >
+          <button aria-label="Close" onClick={() => onClose()} tabIndex={-1}>
             <span className="ic--baseline-close"></span>
           </button>
         </div>
       </div>
       {/* Content */}
-      <div className="wd-content">
-        {children}
-      </div>
+      <div className="wd-content">{children}</div>
       {/* Resize handles */}
-      {!(maximized || minimized) && [
-        "n", "s", "e", "w",
-        "ne", "nw", "se", "sw",
-      ].map(dir => (
-        <div
-          key={dir}
-          className={`wd-resize ${dir}`}
-          onMouseDown={e => onResizeDown(dir, e)}
-          onTouchStart={e => onResizeDown(dir, e)}
-        ></div>
-      ))}
+      {!(maximized || minimized) &&
+        ["n", "s", "e", "w", "ne", "nw", "se", "sw"].map((dir) => (
+          <div
+            key={dir}
+            className={`wd-resize ${dir}`}
+            onMouseDown={(e) => onResizeDown(dir, e)}
+            onTouchStart={(e) => onResizeDown(dir, e)}
+          ></div>
+        ))}
     </div>
   );
 };
