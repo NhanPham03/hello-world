@@ -107,7 +107,7 @@ export const WindowManager: FunctionalComponent = () => {
         {apps.map((app, idx) => (
           <button
             key={app.title}
-            onDblClick={() => openWindow(idx)}
+            onClick={() => openWindow(idx)}
             className="app"
             title={app.title}
           >
