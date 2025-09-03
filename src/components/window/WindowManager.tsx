@@ -44,34 +44,30 @@ export const WindowManager: FunctionalComponent = () => {
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
   // Open or focus a window by icon index
-  const openWindow = useCallback(
-    (iconIdx: number = 0) => {
-      const app = apps[iconIdx];
-      setWindows((ws) => {
-        const idx = ws.findIndex((w) => w.title === app.title);
-        if (idx !== -1) {
-          const win = ws[idx];
-          setFocusedId(win.id);
-          return [...ws.slice(0, idx), ...ws.slice(idx + 1), win];
-        }
-        const id = crypto.randomUUID();
-        setFocusedId(id);
-        return [
-          ...ws,
-          {
-            id,
-            title: app.title,
-            content: app.content,
-            initialX: 120 + ws.length * 30,
-            initialY: 120 + ws.length * 30,
-            initialWidth: app.initialWidth,
-            initialHeight: app.initialHeight,
-          },
-        ];
-      });
-    },
-    [apps]
-  );
+  const openWindow = useCallback((iconIdx: number = 0) => {
+    const app = apps[iconIdx];
+    setWindows((ws) => {
+      const idx = ws.findIndex((w) => w.title === app.title);
+      if (idx !== -1) {
+        const win = ws[idx];
+        setFocusedId(win.id);
+        return [...ws.slice(0, idx), ...ws.slice(idx + 1), win];
+      }
+      const id = crypto.randomUUID();
+      setFocusedId(id);
+      return [...ws,
+        {
+          id,
+          title: app.title,
+          content: app.content,
+          initialX: 120 + ws.length * 30,
+          initialY: 120 + ws.length * 30,
+          initialWidth: app.initialWidth,
+          initialHeight: app.initialHeight,
+        },
+      ];
+    });
+  }, [apps]);
 
   // Close a window by id and focus the next top, un-minimized window
   const closeWindow = useCallback((id: string) => {

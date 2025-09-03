@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import type { FunctionalComponent } from "preact";
-import { useState, useEffect } from "preact/hooks";
+import { useState, useEffect, useCallback } from "preact/hooks";
 import { marked } from "marked";
 
 type PostId = string | null;
@@ -34,26 +34,27 @@ export const PostViewer: FunctionalComponent = () => {
   // Find the post from the posts state
   const post = currentId ? posts.find((p) => p.id === currentId) : null;
 
-  const goTo = (id: PostId) => {
+  const goTo = useCallback((id: PostId) => {
     if (history[current] === id) return; // Don't add duplicate if already current post
     const newHistory = [...history.slice(0, current + 1), id];
     setHistory(newHistory);
     setCurrent(newHistory.length - 1);
     setCurrentId(id);
-  };
+  }, [history, current]);
 
-  const goBack = () => {
+  const goBack = useCallback(() => {
     if (current > 0) {
       setCurrent(current - 1);
       setCurrentId(history[current - 1]);
     }
-  };
-  const goForward = () => {
+  }, [current, history]);
+
+  const goForward = useCallback(() => {
     if (current < history.length - 1) {
       setCurrent(current + 1);
       setCurrentId(history[current + 1]);
     }
-  };
+  }, [current, history]);
 
   return (
     <div className={`postviewer${loading ? " loading" : ""}`}>
@@ -65,11 +66,7 @@ export const PostViewer: FunctionalComponent = () => {
           <button aria-label="Back" onClick={() => goBack()} disabled={current <= 0}>
             <span className="ic--baseline-arrow-back"></span>
           </button>
-          <button
-            aria-label="Forward"
-            onClick={() => goForward()}
-            disabled={current >= history.length - 1}
-          >
+          <button aria-label="Forward" onClick={() => goForward()} disabled={current >= history.length - 1}>
             <span className="ic--baseline-arrow-forward"></span>
           </button>
           <button aria-label="Home" onClick={() => goTo(null)} disabled={!post}>

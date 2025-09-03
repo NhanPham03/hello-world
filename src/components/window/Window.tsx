@@ -1,5 +1,5 @@
 import type { FunctionalComponent, ComponentChildren } from "preact";
-import { useState, useRef, useEffect } from "preact/hooks";
+import { useState, useRef, useEffect, useCallback } from "preact/hooks";
 
 const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
@@ -157,7 +157,15 @@ export const Window: FunctionalComponent<WindowProps> = ({
     document.body.classList.remove("dragging"); // Cover edge case where class still exists
   }, [dragging, resizing]);
 
-  const onHeaderDown = (e: MouseEvent | TouchEvent) => {
+  // Get mouse/touch position from event
+  const getClientXY = useCallback((e: MouseEvent | TouchEvent) => {
+    return {
+      clientX: "touches" in e ? e.touches[0].clientX : e.clientX,
+      clientY: "touches" in e ? e.touches[0].clientY : e.clientY,
+    };
+  }, []);
+
+  const onHeaderDown = useCallback((e: MouseEvent | TouchEvent) => {
     if (maximized) return; // Prevent dragging when maximized
     const { clientX, clientY } = getClientXY(e);
     setOffset({
@@ -165,9 +173,9 @@ export const Window: FunctionalComponent<WindowProps> = ({
       y: clientY - pos.y,
     });
     setDragging(true); // Enable flag, run drag logic (useEffect)
-  };
+  }, [maximized, getClientXY, pos.x, pos.y]);
 
-  const onResizeDown = (dir: string, e: MouseEvent | TouchEvent) => {
+  const onResizeDown = useCallback((dir: string, e: MouseEvent | TouchEvent) => {
     if (maximized || minimized) return; // Prevent resizing when maximized or minimized
     const { clientX, clientY } = getClientXY(e);
     lastResizeStart.current = {
@@ -179,15 +187,7 @@ export const Window: FunctionalComponent<WindowProps> = ({
       y: pos.y,
     };
     setResizing(dir); // Enable flag, run resize logic (useEffect)
-  };
-
-  // Get mouse/touch position from event
-  const getClientXY = (e: MouseEvent | TouchEvent) => {
-    return {
-      clientX: "touches" in e ? e.touches[0].clientX : e.clientX,
-      clientY: "touches" in e ? e.touches[0].clientY : e.clientY,
-    };
-  };
+  }, [maximized, minimized, getClientXY, size.width, size.height, pos.x, pos.y]);
 
   return (
     <div
@@ -213,8 +213,9 @@ export const Window: FunctionalComponent<WindowProps> = ({
         onDblClick={() => onToggleMaximize()}
       >
         {/* Title */}
-        <div className="wd-title">
-          <p>{title}</p>
+        <div className="wd-titlebar">
+          <span className="wd-icon">A</span>
+          <span className="wd-title">{title}</span>
         </div>
         {/* Controls */}
         <div className="wd-controls">
