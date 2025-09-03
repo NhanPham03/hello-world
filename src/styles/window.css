@@ -18,10 +18,10 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 0;
-  left: 0;
-  margin-bottom: 12px;
+  height: 100%;
+  width: 100%;
   z-index: 1;
+  padding: 12px;
   gap: 12px;
   user-select: none;
 }
@@ -29,13 +29,15 @@
 .app {
   display: flex;
   flex-direction: column;
-  height: auto;
-  align-items: center;
+  
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   user-select: none;
+}
+.app:hover {
+  background: blue;
 }
 
 .app-icon {
@@ -49,6 +51,8 @@
   font-size: 12px;
   width: 50px;
   margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Window */
@@ -101,15 +105,21 @@
   color: #fff;
 }
 
-.wd-title {
+.wd-titlebar {
   display: flex;
   flex: 1;
   padding: 8px 0 8px 8px;
+  gap: 4px;
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
 }
-.wd-title p {
+
+.wd-icon {
+  font-weight: bold;
+}
+
+.wd-title {
   overflow: hidden;
   text-overflow: ellipsis;
 }
