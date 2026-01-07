@@ -16,7 +16,7 @@
     "@astrojs/rss": "4.0.12",
     "astro": "5.10.2",
     "marked": "16.0.0",
-    "preact": "10.26.9"
+    "preact": "10.28.2"
   },
   "devDependencies": {
     "prettier": "3.6.2",
